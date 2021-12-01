@@ -30,7 +30,7 @@
 *.exe
 *.out
 *.app
-main
+bst
 
 # OSX specific
 .DS_Store
