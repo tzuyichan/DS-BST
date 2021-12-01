@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <vector>
 
 using namespace std;
@@ -73,4 +74,16 @@ void do_bst_operations(void)
 
 void play_finding_meaty(void)
 {
+    string map_file;
+    int sword, meaty, trap_idx;
+    cout << "Input the filename of the bst map: ";
+    cin >> map_file;
+    // if read file error, return
+    cout << "Input the sword's location: ";
+    cin >> sword;
+    cout << "Input Meaty's location: ";
+    cin >> meaty;
+    cout << "Input the broccoli traps' index (0~9): ";
+    cin >> trap_idx;
+    // find meaty
 }
