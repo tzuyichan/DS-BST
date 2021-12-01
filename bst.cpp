@@ -37,6 +37,38 @@ int main(void)
 
 void do_bst_operations(void)
 {
+    char op;
+    while (true)
+    {
+        cout << "(i)nsert numbers\n"
+                "(d)elete numbers\n"
+                "(s)earch for numbers\n"
+                "(p)rint 4 kinds of orders\n"
+                "(r)eturn"
+             << endl;
+
+        cin >> op;
+
+        switch (op)
+        {
+        case 'i':
+            // insert
+            break;
+        case 'd':
+            // delete
+            break;
+        case 's':
+            // search
+            break;
+        case 'p':
+            // print
+            break;
+        case 'r':
+            return;
+        default:
+            cout << "Unknown input." << endl;
+        }
+    }
 }
 
 void play_finding_meaty(void)
