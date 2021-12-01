@@ -9,7 +9,7 @@ $(CLANG): $(FILENAME).cpp
 	$(CLANG) $(LLVMFLAGS) $^ -o $(FILENAME)
 
 $(GCC): $(FILENAME).cpp
-	$(GCC) $(CXXFLAGS) $^ -o $(FILENAME)
+	$(GCC) $^ -o $(FILENAME) $(CXXFLAGS)
 
 clean:
 	rm *.o $(FILENAME)
