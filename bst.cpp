@@ -1,11 +1,15 @@
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
 
 using namespace std;
 
+#define INPUT_MAX_LEN 128
+
 void do_bst_operations(void);
 void play_finding_meaty(void);
+void parse_input(vector<int> &);
 
 int main(void)
 {
@@ -50,10 +54,13 @@ void do_bst_operations(void)
 
         cin >> op;
 
+        vector<int> input(INPUT_MAX_LEN);
+
         switch (op)
         {
         case 'i':
             // insert
+            parse_input(input);
             break;
         case 'd':
             // delete
@@ -86,4 +93,19 @@ void play_finding_meaty(void)
     cout << "Input the broccoli traps' index (0~9): ";
     cin >> trap_idx;
     // find meaty
+}
+
+void parse_input(vector<int> &input)
+{
+    cout << "Enter numbers: ";
+
+    int i = 0;
+    do
+        cin >> input.at(i);
+    while (input.at(i++) != -1);
+
+    for (i = 0; input.at(i) != -1; ++i)
+    {
+        cout << input.at(i) << endl;
+    }
 }
