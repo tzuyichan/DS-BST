@@ -9,7 +9,7 @@ using namespace std;
 
 void do_bst_operations(void);
 void play_finding_meaty(void);
-void parse_input(vector<int> &);
+int get_input(vector<int> &);
 
 int main(void)
 {
@@ -55,12 +55,15 @@ void do_bst_operations(void)
         cin >> op;
 
         vector<int> input(INPUT_MAX_LEN);
+        int count;
 
         switch (op)
         {
         case 'i':
+            if ((count = get_input(input)) == 0)
+                continue;
             // insert
-            parse_input(input);
+            printf("do insert elements\n");
             break;
         case 'd':
             // delete
@@ -95,7 +98,7 @@ void play_finding_meaty(void)
     // find meaty
 }
 
-void parse_input(vector<int> &input)
+int get_input(vector<int> &input)
 {
     cout << "Enter numbers: ";
 
@@ -104,8 +107,5 @@ void parse_input(vector<int> &input)
         cin >> input.at(i);
     while (input.at(i++) != -1);
 
-    for (i = 0; input.at(i) != -1; ++i)
-    {
-        cout << input.at(i) << endl;
-    }
+    return i - 1;
 }
