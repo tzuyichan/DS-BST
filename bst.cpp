@@ -12,6 +12,7 @@ void do_bst_operations(void);
 void play_finding_meaty(void);
 int get_input(vector<int> &);
 int get_input(vector<int> &, string &);
+void print(vector<int> &);
 
 int main(void)
 {
@@ -140,4 +141,13 @@ int get_input(vector<int> &input, string &filename)
     print(input);
 
     return i;
+}
+
+void print(vector<int> &v)
+{
+    for (int i = 0; v.at(i) != -1; ++i)
+    {
+        cout << v.at(i) << " ";
+    }
+    cout << endl;
 }
