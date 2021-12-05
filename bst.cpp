@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <cstdlib>
 
 using namespace std;
 
@@ -10,6 +11,7 @@ using namespace std;
 void do_bst_operations(void);
 void play_finding_meaty(void);
 int get_input(vector<int> &);
+int get_input(vector<int> &, string &);
 
 int main(void)
 {
@@ -84,11 +86,17 @@ void do_bst_operations(void)
 
 void play_finding_meaty(void)
 {
-    string map_file;
+    string filename;
+    vector<int> input(INPUT_MAX_LEN);
+    int count;
+
     int sword, meaty, trap_idx;
     cout << "Input the filename of the bst map: ";
-    cin >> map_file;
+    cin >> filename;
     // if read file error, return
+    count = get_input(input, filename);
+    printf("File has %d elements\n", count);
+
     cout << "Input the sword's location: ";
     cin >> sword;
     cout << "Input Meaty's location: ";
@@ -108,4 +116,28 @@ int get_input(vector<int> &input)
     while (input.at(i++) != -1);
 
     return i - 1;
+}
+
+int get_input(vector<int> &input, string &filename)
+{
+    string line;
+
+    // Read file.
+    ifstream inFile(filename, ios::in);
+    if (!inFile)
+    {
+        cerr << "Failed to open " << filename << endl;
+        exit(EXIT_FAILURE); // exit program if failed to read file
+    }
+
+    int i = 0;
+    while (getline(inFile, line))
+    {
+        input.at(i++) = stoi(line);
+    }
+    input.at(i) = -1;
+
+    print(input);
+
+    return i;
 }
