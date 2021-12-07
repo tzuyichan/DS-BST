@@ -10,8 +10,8 @@ using namespace std;
 
 void do_bst_operations(void);
 void play_finding_meaty(void);
-int get_input(vector<int> &);
-int get_input(vector<int> &, string &);
+vector<int> get_input();
+vector<int> get_input(string &);
 void print(vector<int> &);
 
 int main(void)
@@ -46,6 +46,8 @@ int main(void)
 void do_bst_operations(void)
 {
     char op;
+    vector<int> input;
+
     while (true)
     {
         cout << "(i)nsert numbers\n"
@@ -54,19 +56,18 @@ void do_bst_operations(void)
                 "(p)rint 4 kinds of orders\n"
                 "(r)eturn"
              << endl;
-
         cin >> op;
-
-        vector<int> input(INPUT_MAX_LEN);
-        int count;
 
         switch (op)
         {
         case 'i':
-            if ((count = get_input(input)) == 0)
+            cout << "Enter numbers: ";
+            input = get_input();
+            if (input.size() == 0)
                 continue;
             // insert
-            printf("do insert elements\n");
+            printf("do insert %lu elements\n", input.size());
+            print(input);
             break;
         case 'd':
             // delete
@@ -88,15 +89,15 @@ void do_bst_operations(void)
 void play_finding_meaty(void)
 {
     string filename;
-    vector<int> input(INPUT_MAX_LEN);
-    int count;
+    vector<int> input;
 
     int sword, meaty, trap_idx;
     cout << "Input the filename of the bst map: ";
     cin >> filename;
     // if read file error, return
-    count = get_input(input, filename);
-    printf("File has %d elements\n", count);
+    input = get_input(filename);
+    printf("File has %lu elements\n", input.size());
+    print(input);
 
     cout << "Input the sword's location: ";
     cin >> sword;
@@ -107,19 +108,25 @@ void play_finding_meaty(void)
     // find meaty
 }
 
-int get_input(vector<int> &input)
+vector<int> get_input()
 {
-    cout << "Enter numbers: ";
+    vector<int> input(INPUT_MAX_LEN);
 
     int i = 0;
     do
         cin >> input.at(i);
     while (input.at(i++) != -1);
 
-    return i - 1;
+    if (input.at(0) == -1)
+        return {};
+    else
+    {
+        input.resize(i - 1);
+        return input;
+    }
 }
 
-int get_input(vector<int> &input, string &filename)
+vector<int> get_input(string &filename)
 {
     string line;
 
@@ -128,24 +135,24 @@ int get_input(vector<int> &input, string &filename)
     if (!inFile)
     {
         cerr << "Failed to open " << filename << endl;
-        exit(EXIT_FAILURE); // exit program if failed to read file
+        exit(EXIT_FAILURE);
     }
+
+    vector<int> input(INPUT_MAX_LEN);
 
     int i = 0;
     while (getline(inFile, line))
     {
         input.at(i++) = stoi(line);
     }
-    input.at(i) = -1;
+    input.resize(i);
 
-    print(input);
-
-    return i;
+    return input;
 }
 
 void print(vector<int> &v)
 {
-    for (int i = 0; v.at(i) != -1; ++i)
+    for (int i = 0; i < v.size(); ++i)
     {
         cout << v.at(i) << " ";
     }
