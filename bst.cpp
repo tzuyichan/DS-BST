@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <cstdlib>
+#include "binary_search_tree.h"
 
 using namespace std;
 
@@ -47,6 +48,7 @@ void do_bst_operations(void)
 {
     char op;
     vector<int> input;
+    BST bst;
 
     while (true)
     {
@@ -79,6 +81,7 @@ void do_bst_operations(void)
             // print
             break;
         case 'r':
+            // call bst destructor
             return;
         default:
             cout << "Unknown input." << endl;
