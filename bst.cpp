@@ -38,6 +38,8 @@ int main(void)
             return 0;
         default:
             cout << "Unknown input." << endl;
+            cin.clear();
+            cin.ignore(INT32_MAX, '\n');
         }
     }
 
@@ -84,6 +86,8 @@ void do_bst_operations(void)
             return;
         default:
             cout << "Unknown input." << endl;
+            cin.clear();
+            cin.ignore(INT32_MAX, '\n');
         }
     }
 }
