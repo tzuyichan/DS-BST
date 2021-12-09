@@ -1,6 +1,10 @@
 #ifndef BINARY_SEARCH_TREE_H
 #define BINARY_SEARCH_TREE_H
 
+#include <vector>
+
+using namespace std;
+
 class BST
 {
 private:
@@ -23,6 +27,8 @@ private:
 public:
     BST();
     ~BST();
+    void insert(const int &);
+    void insert(const vector<int> &);
 
 private:
     Node *root;

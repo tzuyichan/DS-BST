@@ -68,8 +68,7 @@ void do_bst_operations(void)
             if (input.size() == 0)
                 continue;
             // insert
-            printf("do insert %lu elements\n", input.size());
-            print(input);
+            bst.insert(input);
             break;
         case 'd':
             // delete

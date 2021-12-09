@@ -15,6 +15,32 @@ BST::~BST()
     delete root;
 }
 
+void BST::insert(const int &x)
+{
+    Search_result result = find(x);
+    if (result.exists)
+    {
+        cout << "Error. " << result.node->value << " already exists." << endl;
+        return;
+    }
+
+    Node *new_node = new Node;
+    new_node->value = x;
+
+    if (x < result.parent->value)
+        result.parent->lchild = new_node;
+    else
+        result.parent->rchild = new_node;
+
+    cout << new_node->value << " is inserted!" << endl;
+}
+
+void BST::insert(const vector<int> &input)
+{
+    for (const int &x : input)
+        insert(x);
+}
+
 BST::Search_result BST::find(const int &x)
 {
     Search_result result;
