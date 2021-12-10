@@ -12,8 +12,8 @@ using namespace std;
 void do_bst_operations(void);
 void play_finding_meaty(void);
 vector<int> get_input();
-vector<int> get_input(string &);
-void print(vector<int> &);
+vector<int> get_input(const string &);
+void print(const vector<int> &);
 
 int main(void)
 {
@@ -134,7 +134,7 @@ vector<int> get_input()
     }
 }
 
-vector<int> get_input(string &filename)
+vector<int> get_input(const string &filename)
 {
     string line;
 
@@ -158,7 +158,7 @@ vector<int> get_input(string &filename)
     return input;
 }
 
-void print(vector<int> &v)
+void print(const vector<int> &v)
 {
     for (int i = 0; i < v.size(); ++i)
     {
