@@ -3,16 +3,14 @@
 
 using namespace std;
 
-BST::BST()
+BST::BST() : root(nullptr)
 {
-    root = new Node;
-    current = root;
 }
 
 BST::~BST()
 {
     // delete child nodes
-    delete root;
+    // delete root;
 }
 
 void BST::insert(const int &x)
@@ -27,7 +25,9 @@ void BST::insert(const int &x)
     Node *new_node = new Node;
     new_node->value = x;
 
-    if (x < result.parent->value)
+    if (!result.parent)
+        root = new_node;
+    else if (x < result.parent->value)
         result.parent->lchild = new_node;
     else
         result.parent->rchild = new_node;
@@ -43,6 +43,7 @@ void BST::insert(const vector<int> &input)
 
 BST::Search_result BST::find(const int &x)
 {
+    Node *current = root;
     Search_result result;
 
     while (current)
@@ -61,6 +62,5 @@ BST::Search_result BST::find(const int &x)
         }
     }
 
-    current = root;
     return result;
 }

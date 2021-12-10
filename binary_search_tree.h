@@ -32,7 +32,6 @@ public:
 
 private:
     Node *root;
-    Node *current;
     Search_result find(const int &);
 };
 
