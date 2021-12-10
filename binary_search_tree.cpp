@@ -98,3 +98,20 @@ void BST::preorder(Node *start)
         preorder(start->rchild);
     }
 }
+
+void BST::postorder()
+{
+    cout << "Postorder: ";
+    postorder(root);
+    cout << endl;
+}
+
+void BST::postorder(Node *start)
+{
+    if (start)
+    {
+        postorder(start->lchild);
+        postorder(start->rchild);
+        cout << start->value << " ";
+    }
+}

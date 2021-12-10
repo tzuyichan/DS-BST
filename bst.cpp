@@ -81,6 +81,7 @@ void do_bst_operations(void)
         case 'p':
             bst.inorder();
             bst.preorder();
+            bst.postorder();
             break;
         case 'r':
             // call bst destructor

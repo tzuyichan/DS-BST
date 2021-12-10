@@ -31,12 +31,14 @@ public:
     void insert(const vector<int> &);
     void inorder();
     void preorder();
+    void postorder();
 
 private:
     Node *root;
     Search_result find(const int &);
     void inorder(Node *);
     void preorder(Node *);
+    void postorder(Node *);
 };
 
 #endif
