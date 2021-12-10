@@ -81,7 +81,7 @@ void do_bst_operations(void)
         case 'p':
             bst.inorder();
             cout << endl;
-            // print
+            bst.preorder();
             break;
         case 'r':
             // call bst destructor

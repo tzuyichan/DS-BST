@@ -78,5 +78,21 @@ void BST::inorder(Node *start)
         cout << start->value << " ";
         inorder(start->rchild);
     }
+}
+
+void BST::preorder()
+{
+    cout << "Preorder: ";
+    preorder(root);
     cout << endl;
+}
+
+void BST::preorder(Node *start)
+{
+    if (start)
+    {
+        cout << start->value << " ";
+        preorder(start->lchild);
+        preorder(start->rchild);
+    }
 }

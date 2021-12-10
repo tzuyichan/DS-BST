@@ -30,11 +30,13 @@ public:
     void insert(const int &);
     void insert(const vector<int> &);
     void inorder();
+    void preorder();
 
 private:
     Node *root;
     Search_result find(const int &);
     void inorder(Node *);
+    void preorder(Node *);
 };
 
 #endif
