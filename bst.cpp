@@ -76,7 +76,11 @@ void do_bst_operations(void)
             // delete
             break;
         case 's':
-            // search
+            cout << "Enter numbers: ";
+            input = get_input();
+            if (input.size() == 0)
+                continue;
+            bst.find(input);
             break;
         case 'p':
             bst.inorder();

@@ -65,6 +65,18 @@ BST::Search_result BST::find(const int &x)
     return result;
 }
 
+void BST::find(const vector<int> &input)
+{
+    for (const int &x : input)
+    {
+        Search_result result = find(x);
+        if (result.exists)
+            cout << "Bingo! " << result.node->value << " is found." << endl;
+        else
+            cout << "Sorry. " << x << " is not found." << endl;
+    }
+}
+
 void BST::inorder()
 {
     cout << "Inorder: ";

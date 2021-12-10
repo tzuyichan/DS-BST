@@ -29,6 +29,7 @@ public:
     ~BST();
     void insert(const int &);
     void insert(const vector<int> &);
+    void find(const vector<int> &);
     void inorder();
     void preorder();
     void postorder();
