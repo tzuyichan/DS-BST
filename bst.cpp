@@ -80,7 +80,6 @@ void do_bst_operations(void)
             break;
         case 'p':
             bst.inorder();
-            cout << endl;
             bst.preorder();
             break;
         case 'r':

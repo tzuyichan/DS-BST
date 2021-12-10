@@ -67,7 +67,9 @@ BST::Search_result BST::find(const int &x)
 
 void BST::inorder()
 {
-    return inorder(root);
+    cout << "Inorder: ";
+    inorder(root);
+    cout << endl;
 }
 
 void BST::inorder(Node *start)
