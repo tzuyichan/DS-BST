@@ -64,3 +64,19 @@ BST::Search_result BST::find(const int &x)
 
     return result;
 }
+
+void BST::inorder()
+{
+    return inorder(root);
+}
+
+void BST::inorder(Node *start)
+{
+    if (start)
+    {
+        inorder(start->lchild);
+        cout << start->value << " ";
+        inorder(start->rchild);
+    }
+    cout << endl;
+}

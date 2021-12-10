@@ -29,10 +29,12 @@ public:
     ~BST();
     void insert(const int &);
     void insert(const vector<int> &);
+    void inorder();
 
 private:
     Node *root;
     Search_result find(const int &);
+    void inorder(Node *);
 };
 
 #endif

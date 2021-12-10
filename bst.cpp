@@ -79,6 +79,8 @@ void do_bst_operations(void)
             // search
             break;
         case 'p':
+            bst.inorder();
+            cout << endl;
             // print
             break;
         case 'r':
