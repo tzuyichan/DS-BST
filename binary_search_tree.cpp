@@ -48,17 +48,16 @@ BST::Search_result BST::find(const int &x)
 
     while (current)
     {
-        result.parent = current;
-
-        if (x < current->value)
-            current = current->lchild;
-        else if (x > current->value)
-            current = current->rchild;
-        else
+        if (x == current->value)
         {
             result.exists = true;
             result.node = current;
             break;
+        }
+        else
+        {
+            result.parent = current;
+            current = x < current->value ? current->lchild : current->rchild;
         }
     }
 
