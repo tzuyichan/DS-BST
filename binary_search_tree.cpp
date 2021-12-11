@@ -77,6 +77,26 @@ void BST::find(const vector<int> &input)
     }
 }
 
+BST::Search_result BST::find_next_larger_than(Node *target)
+{
+    Search_result result;
+
+    if (!target->rchild)
+        return result;
+
+    result.exists = true;
+    result.parent = target;
+    result.node = target->rchild;
+
+    while (result.node->lchild)
+    {
+        result.parent = result.node;
+        result.node = result.node->lchild;
+    }
+
+    return result;
+}
+
 void BST::inorder()
 {
     cout << "Inorder: ";

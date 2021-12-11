@@ -37,6 +37,7 @@ public:
 private:
     Node *root;
     Search_result find(const int &);
+    Search_result find_next_larger_than(Node *);
     void inorder(Node *);
     void preorder(Node *);
     void postorder(Node *);
