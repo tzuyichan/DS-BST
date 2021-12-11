@@ -97,6 +97,59 @@ BST::Search_result BST::find_next_larger_than(Node *target)
     return result;
 }
 
+void BST::remove(const int &x)
+{
+    Search_result result = find(x);
+
+    if (!result.exists)
+    {
+        cout << x << " does not exist." << endl;
+        return;
+    }
+
+    if (result.node->rchild)
+    {
+        Search_result next_larger = find_next_larger_than(result.node);
+
+        if (result.node == next_larger.parent)
+            result.node->rchild = next_larger.node->rchild;
+        else
+            next_larger.parent->lchild = next_larger.node->rchild;
+
+        result.node->value = next_larger.node->value;
+        delete next_larger.node;
+    }
+    else if (result.node->lchild)
+    {
+        Node *temp = result.node->lchild;
+
+        result.node->value = temp->value;
+        result.node->lchild = temp->lchild;
+        result.node->rchild = temp->rchild;
+
+        delete temp;
+    }
+    else
+    {
+        if (result.node == root)
+            root = nullptr;
+        else if (result.node->value < result.parent->value)
+            result.parent->lchild = nullptr;
+        else
+            result.parent->rchild = nullptr;
+
+        delete result.node;
+    }
+
+    cout << x << " deleted!" << endl;
+}
+
+void BST::remove(const vector<int> &input)
+{
+    for (const int &x : input)
+        remove(x);
+}
+
 void BST::inorder()
 {
     cout << "Inorder: ";

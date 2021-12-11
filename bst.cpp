@@ -69,11 +69,14 @@ void do_bst_operations(void)
             input = get_input();
             if (input.size() == 0)
                 continue;
-            // insert
             bst.insert(input);
             break;
         case 'd':
-            // delete
+            cout << "Enter numbers: ";
+            input = get_input();
+            if (input.size() == 0)
+                continue;
+            bst.remove(input);
             break;
         case 's':
             cout << "Enter numbers: ";
