@@ -44,6 +44,7 @@ private:
     void inorder(Node *);
     void preorder(Node *);
     void postorder(Node *);
+    void destruct_tree(Node *);
 };
 
 #endif

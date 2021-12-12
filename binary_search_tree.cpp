@@ -10,8 +10,17 @@ BST::BST() : root(nullptr)
 
 BST::~BST()
 {
-    // delete child nodes
-    // delete root;
+    destruct_tree(root);
+}
+
+void BST::destruct_tree(Node *start)
+{
+    if (start)
+    {
+        destruct_tree(start->lchild);
+        destruct_tree(start->rchild);
+        delete start;
+    }
 }
 
 void BST::insert(const int &x)
