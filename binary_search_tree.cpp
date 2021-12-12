@@ -1,5 +1,6 @@
 #include "binary_search_tree.h"
 #include <iostream>
+#include <queue>
 
 using namespace std;
 
@@ -198,4 +199,30 @@ void BST::postorder(Node *start)
         postorder(start->rchild);
         cout << start->value << " ";
     }
+}
+
+void BST::level_order()
+{
+    queue<Node *> q;
+    Node *current = root;
+
+    cout << "Level order: ";
+
+    while (current)
+    {
+        cout << current->value << " ";
+
+        if (current->lchild)
+            q.push(current->lchild);
+        if (current->rchild)
+            q.push(current->rchild);
+
+        if (q.size() == 0)
+            break;
+
+        current = q.front();
+        q.pop();
+    }
+
+    cout << endl;
 }

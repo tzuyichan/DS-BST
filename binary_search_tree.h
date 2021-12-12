@@ -35,6 +35,7 @@ public:
     void inorder();
     void preorder();
     void postorder();
+    void level_order();
 
 private:
     Node *root;
