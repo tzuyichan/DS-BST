@@ -2,6 +2,7 @@
 #define BINARY_SEARCH_TREE_H
 
 #include <vector>
+#include <queue>
 
 using namespace std;
 
@@ -35,6 +36,7 @@ public:
     void inorder();
     void preorder();
     void postorder();
+    queue<int> get_postorder() const;
     void level_order();
 
 private:
@@ -44,6 +46,7 @@ private:
     void inorder(Node *);
     void preorder(Node *);
     void postorder(Node *);
+    void postorder(Node *, queue<int> &) const;
     void destruct_tree(Node *);
 };
 

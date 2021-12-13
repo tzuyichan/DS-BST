@@ -210,6 +210,23 @@ void BST::postorder(Node *start)
     }
 }
 
+queue<int> BST::get_postorder() const
+{
+    queue<int> bst;
+    postorder(root, bst);
+    return bst;
+}
+
+void BST::postorder(Node *start, queue<int> &bst) const
+{
+    if (start)
+    {
+        postorder(start->lchild, bst);
+        postorder(start->rchild, bst);
+        bst.push(start->value);
+    }
+}
+
 void BST::level_order()
 {
     queue<Node *> q;
