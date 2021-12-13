@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <queue>
 #include <cstdlib>
 #include "binary_search_tree.h"
 
@@ -13,6 +14,7 @@ void do_bst_operations(void);
 void play_finding_meaty(void);
 vector<int> get_input();
 vector<int> get_input(const string &);
+vector<int> find_vals_containing_digit(const int &, const BST &);
 void print(const vector<int> &);
 
 int main(void)
@@ -92,7 +94,6 @@ void do_bst_operations(void)
             bst.level_order();
             break;
         case 'r':
-            // call bst destructor
             return;
         default:
             cout << "Unknown input." << endl;
@@ -106,22 +107,25 @@ void play_finding_meaty(void)
 {
     string filename;
     vector<int> input;
+    BST bst;
 
-    int sword, meaty, trap_idx;
+    int sword, meaty, digit;
     cout << "Input the filename of the bst map: ";
     cin >> filename;
-    // if read file error, return
     input = get_input(filename);
     printf("File has %lu elements\n", input.size());
     print(input);
+    bst.insert(input);
 
     cout << "Input the sword's location: ";
     cin >> sword;
     cout << "Input Meaty's location: ";
     cin >> meaty;
     cout << "Input the broccoli traps' index (0~9): ";
-    cin >> trap_idx;
+    cin >> digit;
     // find meaty
+    vector<int> to_be_deleted = find_vals_containing_digit(digit, bst);
+    print(to_be_deleted);
 }
 
 vector<int> get_input()
@@ -164,6 +168,28 @@ vector<int> get_input(const string &filename)
     input.resize(i);
 
     return input;
+}
+
+vector<int> find_vals_containing_digit(const int &x, const BST &bst)
+{
+    vector<int> to_be_deleted(INPUT_MAX_LEN);
+    int delete_cnt = 0;
+
+    queue<int> postorder_bst = bst.get_postorder();
+
+    while (!postorder_bst.empty())
+    {
+        string value = to_string(postorder_bst.front());
+        postorder_bst.pop();
+
+        if (value.find(to_string(x)) != -1)
+        {
+            to_be_deleted.at(delete_cnt++) = stoi(value);
+        }
+    }
+    to_be_deleted.resize(delete_cnt);
+
+    return to_be_deleted;
 }
 
 void print(const vector<int> &v)
