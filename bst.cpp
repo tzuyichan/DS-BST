@@ -16,6 +16,7 @@ vector<int> get_input();
 vector<int> get_input(const string &);
 vector<int> find_vals_containing_digit(const int &, const BST &);
 void print(const vector<int> &);
+void print(const queue<int> &);
 
 int main(void)
 {
@@ -197,6 +198,17 @@ void print(const vector<int> &v)
     for (int i = 0; i < v.size(); ++i)
     {
         cout << v.at(i) << " ";
+    }
+    cout << endl;
+}
+
+void print(const queue<int> &q)
+{
+    queue<int> bst = q;
+    while (!bst.empty())
+    {
+        cout << bst.front() << " ";
+        bst.pop();
     }
     cout << endl;
 }
