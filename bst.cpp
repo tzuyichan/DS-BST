@@ -16,6 +16,7 @@ vector<int> get_input();
 vector<int> get_input(const string &);
 vector<int> find_vals_containing_digit(const int &, const BST &);
 queue<int> find_shortest_path(const BST &, const int &, const int &);
+queue<int> clean_path(const queue<int> &);
 void print(const vector<int> &);
 void print(const queue<int> &);
 
@@ -217,6 +218,25 @@ queue<int> find_shortest_path(const BST &bst, const int &sword, const int &meaty
     }
 
     return {};
+}
+
+queue<int> clean_path(const queue<int> &q)
+{
+    queue<int> dirty_path = q;
+    queue<int> cleaned_path;
+    int previous = -1;
+
+    while (!dirty_path.empty())
+    {
+        if (dirty_path.front() != previous)
+        {
+            cleaned_path.push(dirty_path.front());
+        }
+        previous = dirty_path.front();
+        dirty_path.pop();
+    }
+
+    return cleaned_path;
 }
 
 void print(const vector<int> &v)
