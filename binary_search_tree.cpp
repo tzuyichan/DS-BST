@@ -22,6 +22,11 @@ void BST::destruct_tree(Node *start)
     }
 }
 
+int BST::root_value() const
+{
+    return root ? root->value : -1;
+}
+
 void BST::insert(const int &x)
 {
     Search_result result = find(x);

@@ -35,6 +35,7 @@ public:
 
     BST();
     ~BST();
+    int root_value() const;
     void insert(const int &);
     void insert(const vector<int> &);
     void remove(const int &);
