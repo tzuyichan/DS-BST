@@ -1,7 +1,10 @@
 #include "binary_search_tree.h"
 #include <iostream>
+#include <string>
 
 using namespace std;
+
+extern const int INPUT_MAX_LEN;
 
 BST::BST() : root(nullptr)
 {
@@ -130,6 +133,28 @@ BST::Search_result BST::find_next_larger_than(Node *target)
     }
 
     return result;
+}
+
+vector<int> BST::values_containing_digit(const int &x)
+{
+    vector<int> to_be_deleted(INPUT_MAX_LEN);
+    int delete_cnt = 0;
+
+    queue<int> postorder_bst = get_postorder();
+
+    while (!postorder_bst.empty())
+    {
+        string value = to_string(postorder_bst.front());
+        postorder_bst.pop();
+
+        if (value.find(to_string(x)) != -1)
+        {
+            to_be_deleted.at(delete_cnt++) = stoi(value);
+        }
+    }
+    to_be_deleted.resize(delete_cnt);
+
+    return to_be_deleted;
 }
 
 void BST::remove(const int &x)

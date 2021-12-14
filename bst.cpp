@@ -8,13 +8,12 @@
 
 using namespace std;
 
-#define INPUT_MAX_LEN 128
+extern const int INPUT_MAX_LEN = 128;
 
 void do_bst_operations(void);
 void play_finding_meaty(void);
 vector<int> get_input();
 vector<int> get_input(const string &);
-vector<int> find_vals_containing_digit(const int &, const BST &);
 queue<int> find_shortest_path(const BST &, const int &, const int &);
 queue<int> clean_path(const queue<int> &);
 void print(const vector<int> &);
@@ -126,7 +125,7 @@ void play_finding_meaty(void)
     cout << "Input the broccoli traps' index (0~9): ";
     cin >> digit;
     // find meaty
-    bst.remove(find_vals_containing_digit(digit, bst));
+    bst.remove(bst.values_containing_digit(digit));
     print(find_shortest_path(bst, sword, meaty));
 }
 
@@ -170,28 +169,6 @@ vector<int> get_input(const string &filename)
     input.resize(i);
 
     return input;
-}
-
-vector<int> find_vals_containing_digit(const int &x, const BST &bst)
-{
-    vector<int> to_be_deleted(INPUT_MAX_LEN);
-    int delete_cnt = 0;
-
-    queue<int> postorder_bst = bst.get_postorder();
-
-    while (!postorder_bst.empty())
-    {
-        string value = to_string(postorder_bst.front());
-        postorder_bst.pop();
-
-        if (value.find(to_string(x)) != -1)
-        {
-            to_be_deleted.at(delete_cnt++) = stoi(value);
-        }
-    }
-    to_be_deleted.resize(delete_cnt);
-
-    return to_be_deleted;
 }
 
 queue<int> find_shortest_path(const BST &bst, const int &sword, const int &meaty)

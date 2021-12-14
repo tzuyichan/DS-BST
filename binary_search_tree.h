@@ -42,6 +42,7 @@ public:
     void remove(const vector<int> &);
     void find(const vector<int> &);
     Path find_path(const int &, const int &) const;
+    vector<int> values_containing_digit(const int &);
     void inorder();
     void preorder();
     void postorder();
