@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <queue>
+#include <stack>
 
 using namespace std;
 
@@ -26,6 +27,12 @@ private:
     };
 
 public:
+    struct Path
+    {
+        queue<int> top_down;
+        stack<int> bottom_up;
+    };
+
     BST();
     ~BST();
     void insert(const int &);
@@ -33,6 +40,7 @@ public:
     void remove(const int &);
     void remove(const vector<int> &);
     void find(const vector<int> &);
+    Path find_path(const int &, const int &) const;
     void inorder();
     void preorder();
     void postorder();

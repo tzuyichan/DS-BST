@@ -1,6 +1,5 @@
 #include "binary_search_tree.h"
 #include <iostream>
-#include <queue>
 
 using namespace std;
 
@@ -84,6 +83,28 @@ void BST::find(const vector<int> &input)
         else
             cout << "Sorry. " << x << " is not found." << endl;
     }
+}
+
+BST::Path BST::find_path(const int &src, const int &dst) const
+{
+    Search_result result = find(src);
+    Node *current = result.node;
+    Path path;
+
+    while (current)
+    {
+        path.top_down.push(current->value);
+        path.bottom_up.push(current->value);
+
+        if (dst == current->value)
+            return path;
+        else
+            current = dst < current->value ? current->lchild : current->rchild;
+    }
+
+    path.top_down = {};
+    path.bottom_up = {};
+    return path;
 }
 
 BST::Search_result BST::find_next_larger_than(Node *target)
