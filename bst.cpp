@@ -15,6 +15,7 @@ void play_finding_meaty(void);
 vector<int> get_input();
 vector<int> get_input(const string &);
 vector<int> find_vals_containing_digit(const int &, const BST &);
+queue<int> find_shortest_path(const BST &, const int &, const int &);
 void print(const vector<int> &);
 void print(const queue<int> &);
 
@@ -114,8 +115,6 @@ void play_finding_meaty(void)
     cout << "Input the filename of the bst map: ";
     cin >> filename;
     input = get_input(filename);
-    printf("File has %lu elements\n", input.size());
-    print(input);
     bst.insert(input);
 
     cout << "Input the sword's location: ";
@@ -125,8 +124,8 @@ void play_finding_meaty(void)
     cout << "Input the broccoli traps' index (0~9): ";
     cin >> digit;
     // find meaty
-    vector<int> to_be_deleted = find_vals_containing_digit(digit, bst);
-    print(to_be_deleted);
+    bst.remove(find_vals_containing_digit(digit, bst));
+    print(find_shortest_path(bst, sword, meaty));
 }
 
 vector<int> get_input()
@@ -191,6 +190,33 @@ vector<int> find_vals_containing_digit(const int &x, const BST &bst)
     to_be_deleted.resize(delete_cnt);
 
     return to_be_deleted;
+}
+
+queue<int> find_shortest_path(const BST &bst, const int &sword, const int &meaty)
+{
+    BST::Path to_sword = bst.find_path(bst.root_value(), sword);
+    queue<int> full_path = to_sword.top_down;
+
+    while (!to_sword.bottom_up.empty())
+    {
+        int lca = to_sword.bottom_up.top();
+        to_sword.bottom_up.pop();
+        full_path.push(lca);
+        BST::Path to_meaty = bst.find_path(lca, meaty);
+
+        if (!to_meaty.top_down.empty())
+        {
+            while (!to_meaty.top_down.empty())
+            {
+                full_path.push(to_meaty.top_down.front());
+                to_meaty.top_down.pop();
+            }
+
+            return clean_path(full_path);
+        }
+    }
+
+    return {};
 }
 
 void print(const vector<int> &v)

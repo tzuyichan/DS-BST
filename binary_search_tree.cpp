@@ -55,7 +55,7 @@ void BST::insert(const vector<int> &input)
         insert(x);
 }
 
-BST::Search_result BST::find(const int &x)
+BST::Search_result BST::find(const int &x) const
 {
     Node *current = root;
     Search_result result;
