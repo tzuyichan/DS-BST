@@ -19,6 +19,7 @@ queue<int> find_shortest_path(const BST &, const int &, const int &);
 queue<int> clean_path(const queue<int> &);
 void print(const vector<int> &);
 void print(const queue<int> &);
+void print(const stack<int> &);
 
 int main(void)
 {
@@ -255,6 +256,17 @@ void print(const queue<int> &q)
     {
         cout << bst.front() << " ";
         bst.pop();
+    }
+    cout << endl;
+}
+
+void print(const stack<int> &s)
+{
+    stack<int> path = s;
+    while (!path.empty())
+    {
+        cout << path.top() << " ";
+        path.pop();
     }
     cout << endl;
 }
