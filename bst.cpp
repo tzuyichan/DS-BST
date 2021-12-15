@@ -111,11 +111,13 @@ void play_finding_meaty(void)
     string filename;
     vector<int> input;
     BST bst;
-
     int sword, meaty, digit;
     cout << "Input the filename of the bst map: ";
+    queue<int> shortest_path;
+
     cin >> filename;
     input = get_input(filename);
+
     bst.insert(input);
 
     cout << "Input the sword's location: ";
@@ -124,9 +126,22 @@ void play_finding_meaty(void)
     cin >> meaty;
     cout << "Input the broccoli traps' index (0~9): ";
     cin >> digit;
-    // find meaty
+
     bst.remove(bst.values_containing_digit(digit));
-    print(find_shortest_path(bst, sword, meaty));
+    shortest_path = find_shortest_path(bst, sword, meaty);
+
+    if (!shortest_path.empty())
+    {
+        cout << Text::yellow
+             << "Capoo found Meaty!\n"
+                "The shortest path to Meaty is:"
+             << Text::reset << endl;
+        print(shortest_path);
+    }
+    else
+    {
+        cout << Text::red << "No valid path." << Text::reset << endl;
+    }
 }
 
 vector<int> get_input()
