@@ -8,6 +8,14 @@
 
 using namespace std;
 
+namespace Text
+{
+    const string green = "\033[0;32m";
+    const string yellow = "\033[0;33m";
+    const string red = "\033[0;31m";
+    const string reset = "\033[0m";
+}
+
 extern const int INPUT_MAX_LEN = 128;
 
 void do_bst_operations(void);
@@ -25,10 +33,11 @@ int main(void)
     char mode;
     while (true)
     {
-        cout << "(1) Binary search tree\n"
+        cout << Text::green
+             << "(1) Binary search tree\n"
                 "(2) Finding Meaty\n"
                 "(0) Exit"
-             << endl;
+             << Text::reset << endl;
         cin >> mode;
 
         switch (mode)
@@ -42,7 +51,7 @@ int main(void)
         case '0':
             return 0;
         default:
-            cout << "Unknown input." << endl;
+            cout << Text::red << "Unknown input." << Text::reset << endl;
             cin.clear();
             cin.ignore(INT32_MAX, '\n');
         }
@@ -59,32 +68,33 @@ void do_bst_operations(void)
 
     while (true)
     {
-        cout << "(i)nsert numbers\n"
+        cout << Text::green
+             << "(i)nsert numbers\n"
                 "(d)elete numbers\n"
                 "(s)earch for numbers\n"
                 "(p)rint 4 kinds of orders\n"
                 "(r)eturn"
-             << endl;
+             << Text::reset << endl;
         cin >> op;
 
         switch (op)
         {
         case 'i':
-            cout << "Enter numbers: ";
+            cout << Text::green << "Enter numbers: " << Text::reset;
             input = get_input();
             if (input.size() == 0)
                 continue;
             bst.insert(input);
             break;
         case 'd':
-            cout << "Enter numbers: ";
+            cout << Text::green << "Enter numbers: " << Text::reset;
             input = get_input();
             if (input.size() == 0)
                 continue;
             bst.remove(input);
             break;
         case 's':
-            cout << "Enter numbers: ";
+            cout << Text::green << "Enter numbers: " << Text::reset;
             input = get_input();
             if (input.size() == 0)
                 continue;
@@ -99,7 +109,7 @@ void do_bst_operations(void)
         case 'r':
             return;
         default:
-            cout << "Unknown input." << endl;
+            cout << Text::red << "Unknown input." << Text::reset << endl;
             cin.clear();
             cin.ignore(INT32_MAX, '\n');
         }
@@ -112,19 +122,19 @@ void play_finding_meaty(void)
     vector<int> input;
     BST bst;
     int sword, meaty, digit;
-    cout << "Input the filename of the bst map: ";
     queue<int> shortest_path;
 
+    cout << Text::green << "Input the filename of the bst map: " << Text::reset;
     cin >> filename;
     input = get_input(filename);
 
     bst.insert(input);
 
-    cout << "Input the sword's location: ";
+    cout << Text::green << "Input the sword's location: " << Text::reset;
     cin >> sword;
-    cout << "Input Meaty's location: ";
+    cout << Text::green << "Input Meaty's location: " << Text::reset;
     cin >> meaty;
-    cout << "Input the broccoli traps' index (0~9): ";
+    cout << Text::green << "Input the broccoli traps' index (0~9): " << Text::reset;
     cin >> digit;
 
     bst.remove(bst.values_containing_digit(digit));
@@ -183,6 +193,7 @@ vector<int> get_input(const string &filename)
     }
     input.resize(i);
 
+    cout << Text::yellow << "Load file success." << Text::reset << endl;
     return input;
 }
 

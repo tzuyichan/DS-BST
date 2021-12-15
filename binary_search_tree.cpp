@@ -4,6 +4,12 @@
 
 using namespace std;
 
+namespace Text
+{
+    const string red = "\033[0;31m";
+    const string reset = "\033[0m";
+}
+
 extern const int INPUT_MAX_LEN;
 
 BST::BST() : root(nullptr)
@@ -35,7 +41,9 @@ void BST::insert(const int &x)
     Search_result result = find(x);
     if (result.exists)
     {
-        cout << "Error. " << result.node->value << " already exists." << endl;
+        cout << Text::red
+             << "Error. " << result.node->value << " already exists."
+             << Text::reset << endl;
         return;
     }
 
@@ -89,7 +97,7 @@ void BST::find(const vector<int> &input)
         if (result.exists)
             cout << "Bingo! " << result.node->value << " is found." << endl;
         else
-            cout << "Sorry. " << x << " is not found." << endl;
+            cout << Text::red << "Sorry. " << x << " is not found." << Text::reset << endl;
     }
 }
 
@@ -163,7 +171,7 @@ void BST::remove(const int &x)
 
     if (!result.exists)
     {
-        cout << x << " does not exist." << endl;
+        cout << Text::red << x << " does not exist." << Text::reset << endl;
         return;
     }
 
