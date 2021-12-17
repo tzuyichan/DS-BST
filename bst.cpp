@@ -22,6 +22,7 @@ void do_bst_operations(void);
 void play_finding_meaty(void);
 vector<int> get_input();
 vector<int> get_input(const string &);
+void prompt_bad_input(void);
 queue<int> find_shortest_path(const BST &, const int &, const int &);
 queue<int> clean_path(const queue<int> &);
 void print(const vector<int> &);
@@ -51,9 +52,7 @@ int main(void)
         case '0':
             return 0;
         default:
-            cout << Text::red << "Unknown input." << Text::reset << endl;
-            cin.clear();
-            cin.ignore(INT32_MAX, '\n');
+            prompt_bad_input();
         }
     }
 
@@ -109,9 +108,7 @@ void do_bst_operations(void)
         case 'r':
             return;
         default:
-            cout << Text::red << "Unknown input." << Text::reset << endl;
-            cin.clear();
-            cin.ignore(INT32_MAX, '\n');
+            prompt_bad_input();
         }
     }
 }
@@ -195,6 +192,13 @@ vector<int> get_input(const string &filename)
 
     cout << Text::yellow << "Load file success." << Text::reset << endl;
     return input;
+}
+
+void prompt_bad_input(void)
+{
+    cout << Text::red << "Unknown input." << Text::reset << endl;
+    cin.clear();
+    cin.ignore(INT32_MAX, '\n');
 }
 
 queue<int> find_shortest_path(const BST &bst, const int &sword, const int &meaty)
