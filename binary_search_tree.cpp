@@ -21,6 +21,9 @@ BST::~BST()
     destruct_tree(root);
 }
 
+/*
+ * recursively destruct nodes in post order
+ */
 void BST::destruct_tree(Node *start)
 {
     if (start)
@@ -36,8 +39,12 @@ int BST::root_value() const
     return root ? root->value : -1;
 }
 
+/* 
+ * insert one node of value x
+ */
 void BST::insert(const int &x)
 {
+    // if value already exists, do nothing
     Search_result result = find(x);
     if (result.exists)
     {
@@ -47,6 +54,7 @@ void BST::insert(const int &x)
         return;
     }
 
+    // insert new value
     Node *new_node = new Node;
     new_node->value = x;
 
@@ -66,20 +74,24 @@ void BST::insert(const vector<int> &input)
         insert(x);
 }
 
+/*
+ * find if a node of value x exists in the bst
+ */
 BST::Search_result BST::find(const int &x) const
 {
     Node *current = root;
     Search_result result;
 
+    // traverse tree
     while (current)
     {
-        if (x == current->value)
+        if (x == current->value) // value exists
         {
             result.exists = true;
             result.node = current;
             break;
         }
-        else
+        else // go to next node
         {
             result.parent = current;
             current = x < current->value ? current->lchild : current->rchild;
@@ -101,6 +113,10 @@ void BST::find(const vector<int> &input)
     }
 }
 
+/*
+ * similar to BST::find(), but returns the path instead
+ * returns a path from top -> bottom and another path from bottom -> top
+ */
 BST::Path BST::find_path(const int &src, const int &dst) const
 {
     Search_result result = find(src);
@@ -123,6 +139,9 @@ BST::Path BST::find_path(const int &src, const int &dst) const
     return path;
 }
 
+/*
+ * find the least greatest child of node A
+ */
 BST::Search_result BST::find_next_larger_than(Node *target)
 {
     Search_result result;
@@ -130,10 +149,12 @@ BST::Search_result BST::find_next_larger_than(Node *target)
     if (!target->rchild)
         return result;
 
+    // go to right subtree
     result.exists = true;
     result.parent = target;
     result.node = target->rchild;
 
+    // traverse right subtree to find the smallest node
     while (result.node->lchild)
     {
         result.parent = result.node;
@@ -143,10 +164,14 @@ BST::Search_result BST::find_next_larger_than(Node *target)
     return result;
 }
 
+/*
+ * return a list of node values that contain a specific digit 
+ * e.g. 43 contains 4 and 3
+ */
 vector<int> BST::values_containing_digit(const int &x)
 {
     vector<int> to_be_deleted(INPUT_MAX_LEN);
-    int delete_cnt = 0;
+    int delete_cnt = 0; // how many nodes contain this digit
 
     queue<int> postorder_bst = get_postorder();
 
@@ -155,6 +180,7 @@ vector<int> BST::values_containing_digit(const int &x)
         string value = to_string(postorder_bst.front());
         postorder_bst.pop();
 
+        // if node value contains this digit, add to list
         if (value.find(to_string(x)) != -1)
         {
             to_be_deleted.at(delete_cnt++) = stoi(value);
@@ -165,6 +191,9 @@ vector<int> BST::values_containing_digit(const int &x)
     return to_be_deleted;
 }
 
+/* 
+ * remove a node of value x
+ */
 void BST::remove(const int &x)
 {
     Search_result result = find(x);
@@ -175,11 +204,13 @@ void BST::remove(const int &x)
         return;
     }
 
+    // if the node has a right subtree, replace the node with the
+    // least greatest value in its right subtree
     if (result.node->rchild)
     {
         Search_result next_larger = find_next_larger_than(result.node);
 
-        if (result.node == next_larger.parent)
+        if (result.node == next_larger.parent) // new node is its right child
             result.node->rchild = next_larger.node->rchild;
         else
             next_larger.parent->lchild = next_larger.node->rchild;
@@ -187,6 +218,7 @@ void BST::remove(const int &x)
         result.node->value = next_larger.node->value;
         delete next_larger.node;
     }
+    // the node has a left subtree but not a right subtree
     else if (result.node->lchild)
     {
         Node *temp = result.node->lchild;
@@ -197,6 +229,7 @@ void BST::remove(const int &x)
 
         delete temp;
     }
+    // the node is a leaf node
     else
     {
         if (result.node == root)
