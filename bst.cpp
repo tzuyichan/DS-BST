@@ -8,7 +8,7 @@
 
 using namespace std;
 
-namespace Text
+namespace Text // prompt highlighting
 {
     const string green = "\033[0;32m";
     const string yellow = "\033[0;33m";
@@ -29,9 +29,12 @@ void print(const vector<int> &);
 void print(const queue<int> &);
 void print(const stack<int> &);
 
+/*
+ * main loop: enter (1) for bst operations, (2) to play finding Meaty
+ */
 int main(void)
 {
-    char mode;
+    char mode; // user input game mode
     while (true)
     {
         cout << Text::green
@@ -50,20 +53,24 @@ int main(void)
             play_finding_meaty();
             break;
         case '0':
-            return 0;
+            return 0; // end program
         default:
-            prompt_bad_input();
+            prompt_bad_input(); // user entered invalid commands
         }
     }
 
     return 0;
 }
 
+/*
+ * sub-loop for binary search tree operations (supports repeated operations)
+ * operations include: (1) insert, (2) delete, (3) search and (4) print bst
+ */
 void do_bst_operations(void)
 {
-    char op;
+    char op; // user input operation
     vector<int> input;
-    BST bst;
+    BST bst; // instantiate binary search tree
 
     while (true)
     {
@@ -78,41 +85,44 @@ void do_bst_operations(void)
 
         switch (op)
         {
-        case 'i':
+        case 'i': // insert
             cout << Text::green << "Enter numbers: " << Text::reset;
-            input = get_input();
-            if (input.size() == 0)
+            input = get_input();   // get input from keyboard
+            if (input.size() == 0) // user entered nothing
                 continue;
             bst.insert(input);
             break;
-        case 'd':
+        case 'd': // delete
             cout << Text::green << "Enter numbers: " << Text::reset;
             input = get_input();
             if (input.size() == 0)
                 continue;
             bst.remove(input);
             break;
-        case 's':
+        case 's': // search
             cout << Text::green << "Enter numbers: " << Text::reset;
             input = get_input();
             if (input.size() == 0)
                 continue;
             bst.find(input);
             break;
-        case 'p':
+        case 'p': // print
             bst.preorder();
             bst.inorder();
             bst.postorder();
             bst.level_order();
             break;
         case 'r':
-            return;
+            return; // back to main menu
         default:
             prompt_bad_input();
         }
     }
 }
 
+/*
+ * script for playing finding Meaty
+ */
 void play_finding_meaty(void)
 {
     string filename;
@@ -121,12 +131,15 @@ void play_finding_meaty(void)
     int sword, meaty, digit;
     queue<int> shortest_path;
 
+    // get filename and file contents
     cout << Text::green << "Input the filename of the bst map: " << Text::reset;
     cin >> filename;
     input = get_input(filename);
 
+    // populate binary search tree
     bst.insert(input);
 
+    // get positions for in game items
     cout << Text::green << "Input the sword's location: " << Text::reset;
     cin >> sword;
     cout << Text::green << "Input Meaty's location: " << Text::reset;
@@ -134,9 +147,12 @@ void play_finding_meaty(void)
     cout << Text::green << "Input the broccoli traps' index (0~9): " << Text::reset;
     cin >> digit;
 
+    // remove broccoli traps
     bst.remove(bst.values_containing_digit(digit));
+    // find shortest path from root -> sword -> Meaty
     shortest_path = find_shortest_path(bst, sword, meaty);
 
+    // if shortest path exists, print to console
     if (!shortest_path.empty())
     {
         cout << Text::yellow
@@ -151,6 +167,9 @@ void play_finding_meaty(void)
     }
 }
 
+/*
+ * get user input and return bst initializer
+ */
 vector<int> get_input()
 {
     vector<int> input(INPUT_MAX_LEN);
@@ -169,11 +188,14 @@ vector<int> get_input()
     }
 }
 
+/*
+ * get file contents and return bst initializer
+ */
 vector<int> get_input(const string &filename)
 {
     string line;
 
-    // Read file.
+    // read file
     ifstream inFile(filename, ios::in);
     if (!inFile)
     {
@@ -183,6 +205,7 @@ vector<int> get_input(const string &filename)
 
     vector<int> input(INPUT_MAX_LEN);
 
+    // get file contents
     int i = 0;
     while (getline(inFile, line))
     {
@@ -201,18 +224,27 @@ void prompt_bad_input(void)
     cin.ignore(INT32_MAX, '\n');
 }
 
+/*
+ * find shortest path from root -> sword -> Meaty
+ * The path that goes through the sword's and Meaty's lowest common ancestor
+ * (LCA) is the shortest path.
+ */
 queue<int> find_shortest_path(const BST &bst, const int &sword, const int &meaty)
 {
+    // find path from root -> sword
     BST::Path to_sword = bst.find_path(bst.root_value(), sword);
-    queue<int> full_path = to_sword.top_down;
+    queue<int> full_path = to_sword.top_down; // save path to answer
 
+    // find LCA along the path from the sword -> root
     while (!to_sword.bottom_up.empty())
     {
         int lca = to_sword.bottom_up.top();
         to_sword.bottom_up.pop();
-        full_path.push(lca);
-        BST::Path to_meaty = bst.find_path(lca, meaty);
+        full_path.push(lca); // push the possible LCA in the answer queue
 
+        // try reaching Meaty from this LCA
+        BST::Path to_meaty = bst.find_path(lca, meaty);
+        // if path exists, save path to answer
         if (!to_meaty.top_down.empty())
         {
             while (!to_meaty.top_down.empty())
@@ -225,9 +257,13 @@ queue<int> find_shortest_path(const BST &bst, const int &sword, const int &meaty
         }
     }
 
-    return {};
+    return {}; // no path along the path sword -> root goes to Meaty
 }
 
+/*
+ * remove repeated nodes on the answer path
+ * This is a utility function.
+ */
 queue<int> clean_path(const queue<int> &q)
 {
     queue<int> dirty_path = q;
@@ -236,6 +272,7 @@ queue<int> clean_path(const queue<int> &q)
 
     while (!dirty_path.empty())
     {
+        // don't include consecutive repeated nodes
         if (dirty_path.front() != previous)
         {
             cleaned_path.push(dirty_path.front());
