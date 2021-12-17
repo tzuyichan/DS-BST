@@ -20,17 +20,17 @@ private:
 
     struct Search_result
     {
-        bool exists;
-        Node *node;   // return node addr if result exists
-        Node *parent; // return parent addr if result doesn't exist
+        bool exists;  // return true if target exists
+        Node *node;   // return node addr if target exists, otherwise NULL
+        Node *parent; // return parent addr to last searched node
         Search_result() : exists(false), node(nullptr), parent(nullptr) {}
     };
 
 public:
     struct Path
     {
-        queue<int> top_down;
-        stack<int> bottom_up;
+        queue<int> top_down;  // e.g. root -> child x
+        stack<int> bottom_up; // e.g. child x -> root
     };
 
     BST();
