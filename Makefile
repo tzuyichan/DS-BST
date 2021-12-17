@@ -15,8 +15,10 @@ $(GCC): $(FILENAME).cpp $(DATA_STRUCTURE).o
 $(DATA_STRUCTURE).o: $(DATA_STRUCTURE).cpp $(DATA_STRUCTURE).h
 	$(CLANG) $(LLVMFLAGS) -c $<
 
+ifeq ($(MAKECMDGOALS), $(GCC))
 $(DATA_STRUCTURE).o: $(DATA_STRUCTURE).cpp $(DATA_STRUCTURE).h
 	$(GCC) $(CXXFLAGS) -c $<
+endif
 
 clean:
 	rm *.o $(FILENAME)
